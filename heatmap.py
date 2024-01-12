@@ -32,7 +32,6 @@ heatmap_data = daily_counts.pivot_table(index='Date', values='Chat_Count', aggfu
 plt.figure(figsize=(14, 10))
 sns.heatmap(heatmap_data, cmap="Blues",xticklabels=False)
 
-plt.title('Chat Counts Heatmap', fontname='Georgia',fontsize=22)
 plt.ylabel('Date', fontname='Georgia',fontsize=20)
 plt.yticks(fontname='Georgia')
 
@@ -49,7 +48,6 @@ df2['Month'] = df2['Date'].dt.month
 heatmap_data = df2.pivot_table(index=df2['Date'].dt.day, columns='Month', values='StrTime', aggfunc='count') # type: ignore
 sns.heatmap(heatmap_data, cmap="PuBu", linewidths=0.5, linecolor='gray')
 
-plt.title('Monthly Chat Counts Heatmap', fontname='Georgia',fontsize=22)
 plt.xlabel('Month', fontname='Georgia',fontsize=20)
 plt.ylabel('Day of Month', fontname='Georgia',fontsize=20)
 plt.xticks(fontname='Georgia',fontsize=15)  #Setting the x-axis labels

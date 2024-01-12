@@ -16,12 +16,11 @@ from scipy.stats import boxcox
 df2 = pd.read_csv(r"D:\data\聊天记录\2\utf8.csv", sep=',', usecols=[4,7,8])
 df2['month'] = pd.to_datetime(df2['StrTime']).dt.month
 month_counts = df2['month'].value_counts().sort_index()
-scaled_sizes = month_counts * 0.05
+scaled_sizes = month_counts * 0.15
 
 
 # Scatterplotting
 plt.figure(facecolor='white')
-plt.title('Monthly Chat Count Statistics', fontname='Georgia',fontsize=22)
 plt.xlabel('Month', fontname='Georgia',fontsize=20)
 plt.ylabel('Messages', fontname='Georgia',fontsize=20)
 plt.xticks(range(1, 13), fontname='Georgia',fontsize=15)
@@ -50,8 +49,8 @@ max_month_hui = month_counts_hui.idxmax()
 max_bao = month_counts_bao.max()
 max_month_bao = month_counts_bao.idxmax()
 
-month_counts_bao.plot(kind='line', marker='o', label='bao',color='#C6DCE4')
-month_counts_hui.plot(kind='line', marker='o', label='hui',color='#F2D1D1')
+month_counts_bao.plot(kind='line', marker='o',markersize=10, linewidth=3, label='bao',color='#C6DCE4')
+month_counts_hui.plot(kind='line', marker='o',markersize=10, linewidth=3, label='hui',color='#F2D1D1')
 
 # Add labelled maximum value and corresponding month to the highest point
 plt.annotate(f'Max: {max_bao}', xy=(max_month_bao, max_bao), xytext=(max_month_bao + 0.5, max_bao + 10), # type: ignore
@@ -61,8 +60,6 @@ plt.annotate(f'Max: {max_bao}', xy=(max_month_bao, max_bao), xytext=(max_month_b
 plt.annotate(f'Max: {max_hui}', xy=(max_month_hui, max_hui), xytext=(max_month_hui + 0.4, max_hui + 10), # type: ignore
              arrowprops=dict(facecolor='black', arrowstyle='->',linewidth=1, color='lightgrey'),
              fontsize=12,fontname='Georgia', color='dimgray')
-
-plt.title('Monthly Chat Count Trend', fontname='Georgia',fontsize=22)
 
 plt.xlabel('Month', fontname='Georgia',fontsize=20)
 plt.ylabel('Messages', fontname='Georgia',fontsize=20)
@@ -100,7 +97,6 @@ def func(pct, allvals):
 plt.pie(value_counts, explode=explode, labels=labels, colors=colors, 
         autopct=lambda pct: func(pct, value_counts), shadow=True, startangle=80, textprops={'style':'italic' , 'fontsize': 18})
 
-plt.title('Distribution of Messages: bao vs hui', fontname='Georgia',fontsize=22)
 font_prop = FontProperties(family='Georgia')
 plt.legend(labels, loc="best",prop=font_prop)
 plt.axis('equal')  # Keep the pie chart round
@@ -121,7 +117,6 @@ explode = (0.1, 0, 0, 0, 0, 0, 0)
 plt.figure(figsize=(8, 8))
 
 plt.pie(weekday_counts, explode=explode, labels=weekday_counts.index, colors=colors, autopct='%1.1f%%', shadow=True, startangle=90,textprops={'fontsize': 18}) # type: ignore
-plt.title('Distribution of Messages during the Week', fontname='Georgia',fontsize=22)
 font_prop = FontProperties(family='Georgia')
 plt.legend(labels=weekday_counts.index, loc="best",prop=font_prop)
 plt.axis('equal') 
@@ -134,7 +129,6 @@ plt.show()
 
 df2['hour'] = pd.to_datetime(df2['StrTime']).dt.hour
 
-plt.title('Distribution of Messages throughout the Day', fontname='Georgia',fontsize=18)
 plt.xlabel('Time', fontname='Georgia',fontsize=18)
 plt.ylabel('Number of messages', fontname='Georgia',fontsize=18)
 
@@ -184,7 +178,6 @@ for idx, (month, count_data) in enumerate(monthly_counts.items()):
                  arrowprops=dict(facecolor='black', arrowstyle='->',linewidth=1, color='lightgrey'),
                  fontsize=12, fontname='Georgia',color='dimgray')
 
-plt.title('Number of Messages Distributed Each Month since March 2023', fontname='Georgia',fontsize=22)
 plt.xlabel('Day', fontname='Georgia',fontsize=20)
 plt.ylabel('Messages', fontname='Georgia',fontsize=20)
 plt.xticks(range(1, 32),fontname='Georgia',fontsize=15)  
@@ -198,3 +191,4 @@ fig = plt.gcf()
 fig.set_size_inches(15,8)
 fig.savefig('figures/chat_plot2.png',dpi=100)
 plt.show()
+"""
