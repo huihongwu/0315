@@ -1,3 +1,4 @@
+import re
 import numpy as np 
 import pandas as pd 
 import seaborn as sns
@@ -13,10 +14,45 @@ from datetime import datetime
 from scipy.stats import boxcox
 
 # Read the dataset
-df2 = pd.read_csv(r"D:\data\聊天记录\2\utf8.csv", sep=',', usecols=[4,7,8])
+df2 = pd.read_csv(r"D:\data\聊天记录\2\utf8.csv", sep=',')
 df2['month'] = pd.to_datetime(df2['StrTime']).dt.month
 month_counts = df2['month'].value_counts().sort_index()
 scaled_sizes = month_counts * 0.15
+import pandas as pd
+import matplotlib.pyplot as plt
+from matplotlib.font_manager import FontProperties
+
+
+# Assuming ['StrContent'] contains the message content
+keywords = ['love', 'love you', 'loveu', 'like you','爱', '爱你', '我爱你', '我喜欢你', '喜欢你']
+
+# Create a new column indicating if each message contains any of the keywords
+df2['ContainsKeyword'] = df2['StrContent'].str.contains('|'.join(keywords), case=False)
+
+# Calculate the count of messages containing the keywords for each sender
+count_contains_keyword = df2.groupby('IsSender')['ContainsKeyword'].sum()
+
+# Creating Bar Plot
+labels = ['bao', 'hui']
+colors = ['#C6DCE4','#F2D1D1']
+
+plt.figure(figsize=(10, 6))
+
+# Bar plot for the count of messages containing keywords
+plt.bar(labels, count_contains_keyword, color=colors)
+
+# Display the count of messages containing keywords on each bar
+for i, count in enumerate(count_contains_keyword):
+    plt.text(i, count + 0.1, f"{count}", ha='center', fontsize=12)
+
+plt.xlabel('Sender', fontname='Georgia', fontsize=14)
+plt.ylabel('Number of Messages', fontname='Georgia', fontsize=14)
+
+font_prop = FontProperties(family='Georgia')
+
+fig = plt.gcf()
+fig.savefig('figures/loveWord_distribution.png', dpi=100)  # Save the bar plot with corrected file extension
+plt.show()
 
 
 # Scatterplotting
@@ -191,4 +227,3 @@ fig = plt.gcf()
 fig.set_size_inches(15,8)
 fig.savefig('figures/chat_plot2.png',dpi=100)
 plt.show()
-"""
