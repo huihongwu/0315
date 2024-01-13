@@ -18,12 +18,15 @@ df = pd.read_csv(r"D:\data\聊天记录\2\utf8.csv", sep=',')
 # Create a word cloud object with a specified Chinese font path
 font_path = 'C:/Windows/Fonts/STXIHEI.TTF'  
 
-# Filter StrContent that meets Type == 1 and IsSender == 0
-bao_content = df[(df['Type'] == 1) & (df['IsSender'] == 0)]['StrContent']
-output_file_path = 'wordCloud_content/bao_content.txt'
+df['Date'] = pd.to_datetime(df['StrTime'])  
+df_filtered = df[(df['Type'] == 1) & (df['IsSender'] == 0) & (df['Date'] >= '2023-03-15')]
+
+# Create a word cloud object with a specified Chinese font path
+font_path = 'C:/Windows/Fonts/STXIHEI.TTF'  
 
 # Save filtered content to a txt file
-bao_content.to_csv(output_file_path, index=False, header=False, sep='\t')
+output_file_path = 'wordCloud_content/bao_content.txt'
+df_filtered['StrContent'].to_csv(output_file_path, index=False, header=False, sep='\t')
 
 with open('wordCloud_content/bao_content.txt', 'r', encoding='utf-8') as file:
     bao_text = file.read()

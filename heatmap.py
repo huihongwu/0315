@@ -42,8 +42,12 @@ fig.set_size_inches(15,8)
 fig.savefig('figures/heatmap_1.png',dpi=100)
 plt.show()
 
+#####################################################################################################################################################
+
 df2['Date'] = pd.to_datetime(df2['StrTime'])
 df2['Month'] = df2['Date'].dt.month  
+
+df2 = df2[df2['Date'] >= '2023-03-15']
 
 heatmap_data = df2.pivot_table(index=df2['Date'].dt.day, columns='Month', values='StrTime', aggfunc='count') # type: ignore
 sns.heatmap(heatmap_data, cmap="PuBu", linewidths=0.5, linecolor='gray')

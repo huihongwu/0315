@@ -15,15 +15,15 @@ from matplotlib import cm
 
 df = pd.read_csv(r"D:\data\聊天记录\2\utf8.csv", sep=',')
 
+df['Date'] = pd.to_datetime(df['StrTime'])  
+df_filtered = df[(df['Type'] == 1) & (df['IsSender'] == 1) & (df['Date'] >= '2023-03-15')]
+
 # Create a word cloud object with a specified Chinese font path
 font_path = 'C:/Windows/Fonts/STXIHEI.TTF'  
 
-# Filter StrContent that meets Type == 1 and IsSender == 1
-hui_content = df[(df['Type'] == 1) & (df['IsSender'] == 1)]['StrContent']
-output_file_path = 'wordCloud_content/hui_content.txt'
-
 # Save filtered content to a txt file
-hui_content.to_csv(output_file_path, index=False, header=False, sep='\t')
+output_file_path = 'wordCloud_content/hui_content.txt'
+df_filtered['StrContent'].to_csv(output_file_path, index=False, header=False, sep='\t')
 
 with open('wordCloud_content/hui_content.txt', 'r', encoding='utf-8') as file:
     hui_text = file.read()

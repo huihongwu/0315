@@ -16,6 +16,7 @@ from scipy.stats import boxcox
 # Read the dataset
 df2 = pd.read_csv(r"D:\data\聊天记录\2\utf8.csv", sep=',')
 df2['month'] = pd.to_datetime(df2['StrTime']).dt.month
+df2 = df2[pd.to_datetime(df2['StrTime']) >= '2023-03-15']
 month_counts = df2['month'].value_counts().sort_index()
 scaled_sizes = month_counts * 0.15
 import pandas as pd
@@ -54,6 +55,7 @@ fig = plt.gcf()
 fig.savefig('figures/loveWord_distribution.png', dpi=100)  # Save the bar plot with corrected file extension
 plt.show()
 
+#####################################################################################################################################################
 
 # Scatterplotting
 plt.figure(facecolor='white')
@@ -68,6 +70,7 @@ fig.set_size_inches(15,8)
 fig.savefig('figures/chat_month.png',dpi=100)
 plt.show()
 
+#####################################################################################################################################################
 
 df2['month_hui'] = pd.to_datetime(df2[df2['IsSender'] == 1]['StrTime']).dt.month
 df2['month_bao'] = pd.to_datetime(df2[df2['IsSender'] == 0]['StrTime']).dt.month
@@ -114,6 +117,7 @@ fig.set_size_inches(15,8)
 fig.savefig('figures/chat_plot.png',dpi=100)
 plt.show()
 
+#####################################################################################################################################################
 
 value_counts = df2['IsSender'].value_counts()
 percentages = 100. * value_counts / value_counts.sum()
@@ -142,6 +146,7 @@ fig.set_size_inches(15,8)
 fig.savefig('figures/chat_pie',dpi=100)
 plt.show()
 
+#####################################################################################################################################################
 
 dates = pd.to_datetime(df2['StrTime'])
 weekdays = dates.dt.day_name()
@@ -162,6 +167,7 @@ fig.set_size_inches(15,8)
 fig.savefig('figures/chat_pie_2',dpi=100)
 plt.show()
 
+#####################################################################################################################################################
 
 df2['hour'] = pd.to_datetime(df2['StrTime']).dt.hour
 
@@ -179,6 +185,8 @@ fig = plt.gcf()
 fig.set_size_inches(15,8)
 fig.savefig('figures/chat_time.png',dpi=100)
 plt.show()
+
+#####################################################################################################################################################
 
 # Convert 'Date' column to datetime type
 df2['Date'] = pd.to_datetime(df2['StrTime'])
@@ -227,3 +235,5 @@ fig = plt.gcf()
 fig.set_size_inches(15,8)
 fig.savefig('figures/chat_plot2.png',dpi=100)
 plt.show()
+
+#####################################################################################################################################################
