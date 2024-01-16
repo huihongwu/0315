@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 import time
 import matplotlib
 import nltk
+import snownlp as SnowNLP
+from dateutil import parser
 from nltk.sentiment import SentimentIntensityAnalyzer
 
 from matplotlib.font_manager import *
@@ -19,9 +21,7 @@ df2['month'] = pd.to_datetime(df2['StrTime']).dt.month
 df2 = df2[pd.to_datetime(df2['StrTime']) >= '2023-03-15']
 month_counts = df2['month'].value_counts().sort_index()
 scaled_sizes = month_counts * 0.15
-import pandas as pd
-import matplotlib.pyplot as plt
-from matplotlib.font_manager import FontProperties
+
 
 
 # Assuming ['StrContent'] contains the message content
@@ -150,11 +150,13 @@ plt.show()
 
 dates = pd.to_datetime(df2['StrTime'])
 weekdays = dates.dt.day_name()
-weekday_counts = weekdays.value_counts()
+weekday_order = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+weekday_counts = weekdays.value_counts().reindex(weekday_order)
 
 
 colors = ['#FFCACC', '#7C93C3', '#E3DFFD', '#D0F5BE', '#FFDEB4', '#F7A4A4', '#FFEECC']
-explode = (0.1, 0, 0, 0, 0, 0, 0)  
+max_day = weekday_counts.idxmax()
+explode = [0.1 if day == max_day else 0 for day in weekday_counts.index]
 plt.figure(figsize=(8, 8))
 
 plt.pie(weekday_counts, explode=explode, labels=weekday_counts.index, colors=colors, autopct='%1.1f%%', shadow=True, startangle=90,textprops={'fontsize': 18}) # type: ignore
