@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import time
 import matplotlib
 import nltk
-import snownlp as SnowNLP
+from snownlp import SnowNLP
 from dateutil import parser
 from nltk.sentiment import SentimentIntensityAnalyzer
 
@@ -21,11 +21,10 @@ df2['month'] = pd.to_datetime(df2['StrTime']).dt.month
 df2 = df2[pd.to_datetime(df2['StrTime']) >= '2023-03-15']
 month_counts = df2['month'].value_counts().sort_index()
 scaled_sizes = month_counts * 0.15
-
-
+ 
 
 # Assuming ['StrContent'] contains the message content
-keywords = ['love', 'love you', 'loveu', 'like you','爱', '爱你', '我爱你', '我喜欢你', '喜欢你']
+keywords = ['love', '拥抱','抱抱','like you','亲亲','爱', '我喜欢', '喜欢你']
 
 # Create a new column indicating if each message contains any of the keywords
 df2['ContainsKeyword'] = df2['StrContent'].str.contains('|'.join(keywords), case=False)
@@ -188,54 +187,3 @@ fig.set_size_inches(15,8)
 fig.savefig('figures/chat_time.png',dpi=100)
 plt.show()
 
-#####################################################################################################################################################
-
-# Convert 'Date' column to datetime type
-df2['Date'] = pd.to_datetime(df2['StrTime'])
-
-df2.set_index('Date', inplace=True)
-
-# Create a dictionary with monthly statistics
-monthly_counts = {}
-
-# Processing of the DataFrame for each month
-for year in range(2023, 2024):
-    for month in range(3, 13):
-        month_str = f'{year}-{month:02d}'
-        month_df = df2.loc[month_str]
-        daily_count = month_df.resample('D').size()
-        monthly_counts[month_str] = daily_count
-
-plt.figure(figsize=(12, 8))
-
-# Add titles and tags
-labels = [f'{year}-{month:02d}' for year in range(2023, 2024) for month in range(3, 13)]
-colors = ['#FFCACC', '#7C93C3', '#E3DFFD', '#D0F5BE', '#FFDEB4', '#F7A4A4', '#FF90C2', '#F2D1D1', '#DAEAF1', '#7C93C3', '#A25772', '#9EB8D9']
-
-for idx, (month, count_data) in enumerate(monthly_counts.items()):
-    plt.plot(count_data.index.day, count_data.values, marker='o', linestyle='-', color=colors[idx], label=month)
-    
-    # Find the maximum value and the corresponding index
-    max_value = count_data.max()
-    max_day = count_data.idxmax().day  
-    
-    # Maximum values marked on the graph
-    plt.annotate(f'Max: {max_value}', xy=(max_day, max_value), xytext=(max_day + 1.2, max_value + 1),
-                 arrowprops=dict(facecolor='black', arrowstyle='->',linewidth=1, color='lightgrey'),
-                 fontsize=12, fontname='Georgia',color='dimgray')
-
-plt.xlabel('Day', fontname='Georgia',fontsize=20)
-plt.ylabel('Messages', fontname='Georgia',fontsize=20)
-plt.xticks(range(1, 32),fontname='Georgia',fontsize=15)  
-plt.yticks(fontname='Georgia',fontsize=15)
-font_prop = FontProperties(family='Georgia')
-plt.legend(labels, loc="best",prop=font_prop)
-
-plt.tight_layout()
-
-fig = plt.gcf()
-fig.set_size_inches(15,8)
-fig.savefig('figures/chat_plot2.png',dpi=100)
-plt.show()
-
-#####################################################################################################################################################
