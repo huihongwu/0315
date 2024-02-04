@@ -22,7 +22,7 @@ df2 = df2[pd.to_datetime(df2['StrTime']) >= '2023-03-15']
 month_counts = df2['month'].value_counts().sort_index()
 scaled_sizes = month_counts * 0.15
  
-"""
+
 # Assuming ['StrContent'] contains the message content
 keywords = ['love', '拥抱','抱抱','like you','亲亲','爱', '我喜欢', '喜欢你']
 
@@ -187,7 +187,7 @@ fig.set_size_inches(15,8)
 fig.savefig('figures/chat_time.png',dpi=100)
 plt.show()
 
-"""
+
 # Convert 'Date' column to datetime type
 df2['Date'] = pd.to_datetime(df2['StrTime'])
 
