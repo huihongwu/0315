@@ -229,7 +229,6 @@ for idx, (month, count_data) in enumerate(monthly_counts.items()):
                  arrowprops=dict(facecolor='black', arrowstyle='->',linewidth=2, color='grey'),
                  fontsize=13, fontname='Georgia',color='dimgray')
 
-plt.title('Number of Messages Distributed Each Month since March 2023', fontname='Georgia',fontsize=22)
 plt.xlabel('Day', fontname='Georgia',fontsize=20)
 plt.ylabel('Messages', fontname='Georgia',fontsize=20)
 plt.xticks(range(1, 32),fontname='Georgia',fontsize=15)  
