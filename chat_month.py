@@ -186,7 +186,7 @@ fig = plt.gcf()
 fig.set_size_inches(15,8)
 fig.savefig('figures/chat_time.png',dpi=100)
 plt.show()
-
+#####################################################################################################################################################
 
 # Convert 'Date' column to datetime type
 df2['Date'] = pd.to_datetime(df2['StrTime'])
