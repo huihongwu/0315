@@ -22,7 +22,7 @@ df2 = df2[pd.to_datetime(df2['StrTime']) >= '2023-03-15']
 month_counts = df2['month'].value_counts().sort_index()
 scaled_sizes = month_counts * 0.15
  
-
+"""
 # Assuming ['StrContent'] contains the message content
 keywords = ['love', '拥抱','抱抱','like you','亲亲','爱', '我喜欢', '喜欢你']
 
@@ -187,3 +187,59 @@ fig.set_size_inches(15,8)
 fig.savefig('figures/chat_time.png',dpi=100)
 plt.show()
 
+"""
+# Convert 'Date' column to datetime type
+df2['Date'] = pd.to_datetime(df2['StrTime'])
+
+df2.set_index('Date', inplace=True)
+
+# Create a dictionary with monthly statistics
+monthly_counts = {}
+
+# Processing of the DataFrame for each month
+for month in range(3, 13):
+    month_str = f'2023-{month:02d}'
+    month_df = df2.loc[month_str]
+    daily_count = month_df.resample('D').size()
+    monthly_counts[month_str] = daily_count
+
+# Additional code for January and February 2024
+for month in range(1, 3):
+    month_str = f'2024-{month:02d}'
+    month_df = df2.loc[month_str]
+    daily_count = month_df.resample('D').size()
+    monthly_counts[month_str] = daily_count
+
+    
+plt.figure(figsize=(1, 1))
+
+# Add titles and tags
+labels = ['2023-03', '2023-04', '2023-05', '2023-06', '2023-07','2023-08', '2023-09', '2023-10', '2023-11', '2023-12','2024-01', '2024-02']
+colors = ['#FFCACC', '#7C93C3', '#E3DFFD', '#D0F5BE', '#FFDEB4', '#F7A4A4', '#ADD8E6', '#F2D1D1', '#C875C4', '#7BC8F6', '#FF796C', '#008080']
+
+for idx, (month, count_data) in enumerate(monthly_counts.items()):
+    plt.plot(count_data.index.day, count_data.values, marker='o', linestyle='-', color=colors[idx], label=month)
+    
+    # Find the maximum value and the corresponding index
+    max_value = count_data.max()
+    max_day = count_data.idxmax().day  
+    
+    # Maximum values marked on the graph
+    plt.annotate(f'Max: {max_value}', xy=(max_day, max_value), xytext=(max_day + 1.2, max_value + 1),
+                 arrowprops=dict(facecolor='black', arrowstyle='->',linewidth=2, color='grey'),
+                 fontsize=13, fontname='Georgia',color='dimgray')
+
+plt.title('Number of Messages Distributed Each Month since March 2023', fontname='Georgia',fontsize=22)
+plt.xlabel('Day', fontname='Georgia',fontsize=20)
+plt.ylabel('Messages', fontname='Georgia',fontsize=20)
+plt.xticks(range(1, 32),fontname='Georgia',fontsize=15)  
+plt.yticks(fontname='Georgia',fontsize=15)
+font_prop = FontProperties(family='Georgia')
+plt.legend(labels, loc="best",prop=font_prop)
+
+plt.tight_layout()
+
+fig = plt.gcf()
+fig.set_size_inches(15,8)
+fig.savefig('figures/chat_plot2.png',dpi=100)
+plt.show()
