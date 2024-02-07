@@ -15,7 +15,6 @@ from scipy.stats import boxcox
 df2 = pd.read_csv(r"D:\data\聊天记录\2\utf8.csv", sep=',', usecols=[4,7,8])
 df2['Date'] = pd.to_datetime(df2['StrTime']).dt.date
 
-
 # Filter data from March 15, 2023, onwards
 start_date = pd.to_datetime('2023-03-15').date()
 df2_filtered = df2[df2['Date'] >= start_date]
@@ -30,7 +29,7 @@ heatmap_data = daily_counts.pivot_table(index='Date', values='Chat_Count', aggfu
 
 # Heat mapping using seaborn
 plt.figure(figsize=(14, 10))
-sns.heatmap(heatmap_data, cmap="Blues",xticklabels=False)
+sns.heatmap(heatmap_data, cmap="PuBu",xticklabels=False)
 
 plt.ylabel('Date', fontname='Georgia',fontsize=20)
 plt.yticks(fontname='Georgia')
@@ -43,22 +42,23 @@ fig.savefig('figures/heatmap_1.png',dpi=100)
 plt.show()
 
 #####################################################################################################################################################
-
 df2['Date'] = pd.to_datetime(df2['StrTime'])
-df2['Month'] = df2['Date'].dt.month  
-
+df2['Month'] = df2['Date'].dt.month
+df2['Year'] = df2['Date'].dt.year 
 df2 = df2[df2['Date'] >= '2023-03-15']
 
-heatmap_data = df2.pivot_table(index=df2['Date'].dt.day, columns='Month', values='StrTime', aggfunc='count') # type: ignore
+heatmap_data = df2.pivot_table(index=df2['Date'].dt.day, columns=['Year', 'Month'], values='StrTime', aggfunc='count') # type: ignore
 sns.heatmap(heatmap_data, cmap="PuBu", linewidths=0.5, linecolor='gray')
 
-plt.xlabel('Month', fontname='Georgia',fontsize=20)
-plt.ylabel('Day of Month', fontname='Georgia',fontsize=20)
-plt.xticks(fontname='Georgia',fontsize=15)  #Setting the x-axis labels
-plt.yticks(fontname='Georgia',fontsize=15)
+plt.xlabel('Month', fontname='Georgia', fontsize=15) 
+plt.ylabel('Day', fontname='Georgia', fontsize=15)
+plt.xticks(fontname='Georgia', fontsize=15)  
+plt.yticks(fontname='Georgia', fontsize=15)
 plt.tight_layout()
 
 fig = plt.gcf()
-fig.set_size_inches(15,8)
-fig.savefig('figures/heatmap_2.png',dpi=100)
+fig.set_size_inches(15, 8)
+fig.savefig('figures/heatmap_2.png', dpi=100)
 plt.show()
+
+

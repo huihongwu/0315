@@ -237,6 +237,7 @@ ana
 不会
 est
 can
+
 他
 然后
 estoy
@@ -251,6 +252,10 @@ tiene
 hacer
 dia
 mi
+00
+30
+抠
+鼻
 这个
 挺
 t
@@ -340,6 +345,7 @@ ZT
 ZZ
 [
 ]
+!
 _
 a's
 able

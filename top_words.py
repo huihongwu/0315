@@ -71,7 +71,7 @@ top_words_hui = pd.DataFrame(hui_top_words, columns=['Word', 'Count'])
 plt.figure(figsize=(15, 8))
 
 plt.subplot(1, 2, 1)
-blues_reversed = sns.color_palette('Blues', n_colors=20)[::-1]
+blues_reversed = sns.color_palette('PuBu', n_colors=20)[::-1]
 sns.barplot(x='Count', y='Word', data=top_words_bao, palette=blues_reversed)
 plt.gca().spines['top'].set_visible(False)
 plt.gca().spines['right'].set_visible(False)
@@ -86,7 +86,7 @@ for i, (word, count) in enumerate(top_words_bao.iterrows()):
     plt.text(count['Count'], i, f"{count['Word']} ({count['Count']})", va='center', ha='right')
 
 plt.subplot(1, 2, 2)
-RdPu_reversed = sns.color_palette('RdPu', n_colors=20)[::-1]
+RdPu_reversed = sns.color_palette('BuPu', n_colors=20)[::-1]
 sns.barplot(x='Count', y='Word', data=top_words_hui, palette=RdPu_reversed)
 plt.gca().spines['top'].set_visible(False)
 plt.gca().spines['right'].set_visible(False)

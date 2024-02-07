@@ -38,7 +38,7 @@ with open(stopwords_path, 'r', encoding='utf-8') as f:
 hui_words = jieba.cut(hui_text)
 
 # Define wordCloud shapes
-mask_image_path = "wordCloud_content/pink.jpg" 
+mask_image_path = "wordCloud_content/purple.jpg" 
 mask_image = np.array(Image.open(mask_image_path))
 img_colors = ImageColorGenerator(mask_image) # type: ignore
 
