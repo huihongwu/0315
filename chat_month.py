@@ -4,7 +4,6 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import time
-import matplotlib
 import nltk
 from snownlp import SnowNLP
 from dateutil import parser
@@ -47,10 +46,11 @@ for i, count in enumerate(count_contains_keyword):
 
 plt.xlabel('Sender', fontname='Georgia', fontsize=14)
 plt.ylabel('Number of Messages', fontname='Georgia', fontsize=14)
-
 font_prop = FontProperties(family='Georgia')
-
 fig = plt.gcf()
+plt.gca().spines['top'].set_visible(False)
+plt.gca().spines['right'].set_visible(False)
+plt.gca().spines['bottom'].set_visible(True)
 fig.savefig('figures/loveWord_distribution.png', dpi=100)  # Save the bar plot with corrected file extension
 plt.show()
 
@@ -63,8 +63,10 @@ plt.ylabel('Messages', fontname='Georgia',fontsize=20)
 plt.xticks(range(1, 13), fontname='Georgia',fontsize=15)
 plt.yticks(fontname='Georgia',fontsize=15)
 plt.scatter(month_counts.index, month_counts.values, color='#9EB8D9', marker='o',s=scaled_sizes) # type: ignore
-
 fig = plt.gcf()
+plt.gca().spines['top'].set_visible(False)
+plt.gca().spines['right'].set_visible(False)
+plt.gca().spines['bottom'].set_visible(True)
 fig.set_size_inches(15,8)
 fig.savefig('figures/chat_month.png',dpi=100)
 plt.show()
@@ -87,15 +89,15 @@ max_month_hui = month_counts_hui.idxmax()
 max_bao = month_counts_bao.max()
 max_month_bao = month_counts_bao.idxmax()
 
-month_counts_bao.plot(kind='line', marker='o',markersize=10, linewidth=3, label='bao',color='#C6DCE4')
-month_counts_hui.plot(kind='line', marker='o',markersize=10, linewidth=3, label='hui',color='#F2D1D1')
+month_counts_bao.plot(kind='line', marker='o',markersize=14, linewidth=5, label='bao',color='#C6DCE4')
+month_counts_hui.plot(kind='line', marker='o',markersize=14, linewidth=5, label='hui',color='#F2D1D1')
 
 # Add labelled maximum value and corresponding month to the highest point
 plt.annotate(f'Max: {max_bao}', xy=(max_month_bao, max_bao), xytext=(max_month_bao + 0.5, max_bao + 10), # type: ignore
              arrowprops=dict(facecolor='black', arrowstyle='->',linewidth=1, color='lightgrey'),
              fontsize=12,fontname='Georgia',color='dimgray')
 
-plt.annotate(f'Max: {max_hui}', xy=(max_month_hui, max_hui), xytext=(max_month_hui + 0.4, max_hui + 10), # type: ignore
+plt.annotate(f'Max: {max_hui}', xy=(max_month_hui, max_hui), xytext=(max_month_hui + 0.5, max_hui + 10), # type: ignore
              arrowprops=dict(facecolor='black', arrowstyle='->',linewidth=1, color='lightgrey'),
              fontsize=12,fontname='Georgia', color='dimgray')
 
@@ -112,12 +114,15 @@ plt.legend(labels, loc="best",prop=font_prop,)
 plt.tight_layout()  
 
 fig = plt.gcf()
+plt.gca().spines['top'].set_visible(False)
+plt.gca().spines['right'].set_visible(False)
+plt.gca().spines['bottom'].set_visible(True)
+plt.legend(labels, loc="lower right", prop=font_prop)
 fig.set_size_inches(15,8)
 fig.savefig('figures/chat_plot.png',dpi=100)
 plt.show()
 
 #####################################################################################################################################################
-
 value_counts = df2['IsSender'].value_counts()
 percentages = 100. * value_counts / value_counts.sum()
 
@@ -137,7 +142,6 @@ plt.pie(value_counts, explode=explode, labels=labels, colors=colors,
         autopct=lambda pct: func(pct, value_counts), shadow=True, startangle=80, textprops={'style':'italic' , 'fontsize': 18})
 
 font_prop = FontProperties(family='Georgia')
-plt.legend(labels, loc="best",prop=font_prop)
 plt.axis('equal')  # Keep the pie chart round
 
 fig = plt.gcf()
@@ -160,7 +164,7 @@ plt.figure(figsize=(8, 8))
 
 plt.pie(weekday_counts, explode=explode, labels=weekday_counts.index, colors=colors, autopct='%1.1f%%', shadow=True, startangle=90,textprops={'fontsize': 18}) # type: ignore
 font_prop = FontProperties(family='Georgia')
-plt.legend(labels=weekday_counts.index, loc="best",prop=font_prop)
+#plt.legend(labels=weekday_counts.index, loc="lower right",prop=font_prop)
 plt.axis('equal') 
 
 fig = plt.gcf()
@@ -169,7 +173,6 @@ fig.savefig('figures/chat_pie_2',dpi=100)
 plt.show()
 
 #####################################################################################################################################################
-
 df2['hour'] = pd.to_datetime(df2['StrTime']).dt.hour
 
 plt.xlabel('Time', fontname='Georgia',fontsize=18)
@@ -183,11 +186,14 @@ plt.xticks(np.arange(0, 24, 1.0), fontname='Georgia',fontsize=15)
 plt.yticks(fontname='Georgia',fontsize=15)
 
 fig = plt.gcf()
+plt.gca().spines['top'].set_visible(False)
+plt.gca().spines['right'].set_visible(False)
+plt.gca().spines['bottom'].set_visible(True)
 fig.set_size_inches(15,8)
 fig.savefig('figures/chat_time.png',dpi=100)
 plt.show()
-#####################################################################################################################################################
 
+#####################################################################################################################################################
 # Convert 'Date' column to datetime type
 df2['Date'] = pd.to_datetime(df2['StrTime'])
 
@@ -210,16 +216,15 @@ for month in range(1, 3):
     daily_count = month_df.resample('D').size()
     monthly_counts[month_str] = daily_count
 
-    
 plt.figure(figsize=(1, 1))
 
 # Add titles and tags
 labels = ['2023-03', '2023-04', '2023-05', '2023-06', '2023-07','2023-08', '2023-09', '2023-10', '2023-11', '2023-12','2024-01', '2024-02']
-colors = ['#FFCACC', '#7C93C3', '#E3DFFD', '#D0F5BE', '#FFDEB4', '#F7A4A4', '#ADD8E6', '#F2D1D1', '#C875C4', '#7BC8F6', '#FF796C', '#008080']
+colors = ['#FFCACC', '#7C93C3', '#E3DFFD', '#D0F5BE', '#FFDEB4', '#F7A4A4', '#ADD8E6', '#F2D1D1', '#C87AA4', '#7BAAF6', '#FF7AAC', '#AABB80']
 
 for idx, (month, count_data) in enumerate(monthly_counts.items()):
-    plt.plot(count_data.index.day, count_data.values, marker='o', linestyle='-', color=colors[idx], label=month)
-    
+    plt.plot(count_data.index.day, count_data.values, linestyle='solid', linewidth=2, color=colors[idx], label=month)
+
     # Find the maximum value and the corresponding index
     max_value = count_data.max()
     max_day = count_data.idxmax().day  
@@ -228,7 +233,7 @@ for idx, (month, count_data) in enumerate(monthly_counts.items()):
     plt.annotate(f'Max: {max_value}', xy=(max_day, max_value), xytext=(max_day + 1.2, max_value + 1),
                  arrowprops=dict(facecolor='black', arrowstyle='->',linewidth=2, color='grey'),
                  fontsize=13, fontname='Georgia',color='dimgray')
-
+    
 plt.xlabel('Day', fontname='Georgia',fontsize=20)
 plt.ylabel('Messages', fontname='Georgia',fontsize=20)
 plt.xticks(range(1, 32),fontname='Georgia',fontsize=15)  
@@ -239,6 +244,9 @@ plt.legend(labels, loc="best",prop=font_prop)
 plt.tight_layout()
 
 fig = plt.gcf()
+plt.gca().spines['top'].set_visible(False)
+plt.gca().spines['right'].set_visible(False)
+plt.gca().spines['bottom'].set_visible(True)
 fig.set_size_inches(15,8)
 fig.savefig('figures/chat_plot2.png',dpi=100)
 plt.show()
