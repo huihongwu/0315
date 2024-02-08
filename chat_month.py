@@ -23,7 +23,7 @@ scaled_sizes = month_counts * 0.15
  
 
 # Assuming ['StrContent'] contains the message content
-keywords = ['love', '拥抱','抱抱','like you','亲亲','爱', '我喜欢', '喜欢你']
+keywords = ['loveyou','i love you','love u','loveu', '拥抱','抱抱','like you','亲亲','爱', '我喜欢', '喜欢你']
 
 # Create a new column indicating if each message contains any of the keywords
 df2['ContainsKeyword'] = df2['StrContent'].str.contains('|'.join(keywords), case=False)
@@ -36,14 +36,21 @@ labels = ['bao', 'hui']
 colors = ['#C6DCE4','#8c85be']
 
 plt.figure(figsize=(10, 6))
-
 # Bar plot for the count of messages containing keywords
 plt.bar(labels, count_contains_keyword, color=colors)
 
 # Display the count of messages containing keywords on each bar
 for i, count in enumerate(count_contains_keyword):
     plt.text(i, count + 0.1, f"{count}", ha='center', fontsize=12)
+    print(f"{labels}: {count}")
 
+"""
+for i, sender in enumerate(count_contains_keyword.index):
+    for keyword in keywords:
+        count = df2[(df2['IsSender'] == sender) & (df2['StrContent'].str.contains(keyword, case=False))]['ContainsKeyword'].sum()
+        plt.text(i, count + 0.1, f"{count}", ha='center', fontsize=12)
+        print(f"{sender}: {keyword} - {count}")
+"""
 plt.xlabel('Sender', fontname='Georgia', fontsize=14)
 plt.ylabel('Number of Love Messages', fontname='Georgia', fontsize=14)
 font_prop = FontProperties(family='Georgia')
@@ -53,7 +60,7 @@ plt.gca().spines['right'].set_visible(False)
 plt.gca().spines['bottom'].set_visible(True)
 fig.savefig('figures/loveWord_distribution.png', dpi=100)  # Save the bar plot with corrected file extension
 plt.show()
-
+"""
 #####################################################################################################################################################
 
 plt.figure(facecolor='white')
@@ -248,3 +255,4 @@ plt.gca().spines['bottom'].set_visible(True)
 fig.set_size_inches(15,8)
 fig.savefig('figures/chat_plot2.png',dpi=100)
 plt.show()
+"""
