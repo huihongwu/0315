@@ -37,7 +37,7 @@ bao_words = jieba.cut(bao_text)
 bao_word_count = Counter([word for word in bao_words if word not in stopwords_list])
 
 # Select the top 20 words
-bao_top_words = bao_word_count.most_common(20)
+bao_top_words = bao_word_count.most_common(30)
 
 # Remove '\n' and ' ' from the top words
 bao_top_words = [word for word in bao_top_words if word[0] not in {'\n', ' '}]
@@ -62,7 +62,7 @@ with open(stopwords_path, 'r', encoding='utf-8') as f:
 
 hui_words = jieba.cut(hui_text)
 hui_word_count = Counter([word for word in hui_words if word not in stopwords_list])
-hui_top_words = hui_word_count.most_common(20)
+hui_top_words = hui_word_count.most_common(30)
 hui_top_words = [word for word in hui_top_words if word[0] not in {'\n', ' '}]
 top_words_hui = pd.DataFrame(hui_top_words, columns=['Word', 'Count'])
 
@@ -71,7 +71,7 @@ top_words_hui = pd.DataFrame(hui_top_words, columns=['Word', 'Count'])
 plt.figure(figsize=(15, 8))
 
 plt.subplot(1, 2, 1)
-blues_reversed = sns.color_palette('PuBu', n_colors=20)[::-1]
+blues_reversed = sns.color_palette('PuBu', n_colors=30)[::-1]
 sns.barplot(x='Count', y='Word', data=top_words_bao, palette=blues_reversed)
 plt.gca().spines['top'].set_visible(False)
 plt.gca().spines['right'].set_visible(False)
@@ -86,7 +86,7 @@ for i, (word, count) in enumerate(top_words_bao.iterrows()):
     plt.text(count['Count'], i, f"{count['Word']} ({count['Count']})", va='center', ha='right')
 
 plt.subplot(1, 2, 2)
-RdPu_reversed = sns.color_palette('BuPu', n_colors=20)[::-1]
+RdPu_reversed = sns.color_palette('BuPu', n_colors=30)[::-1]
 sns.barplot(x='Count', y='Word', data=top_words_hui, palette=RdPu_reversed)
 plt.gca().spines['top'].set_visible(False)
 plt.gca().spines['right'].set_visible(False)
@@ -99,5 +99,5 @@ plt.ylabel('')
 for i, (word, count) in enumerate(top_words_hui.iterrows()):
     plt.text(count['Count'], i, f"{count['Word']} ({count['Count']})", va='center', ha='left')
 plt.tight_layout()
-plt.savefig('figures/top20words.png',dpi=100)
+plt.savefig('figures/top30words.png',dpi=100)
 plt.show()

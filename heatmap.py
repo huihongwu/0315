@@ -1,16 +1,8 @@
-import numpy as np 
 import pandas as pd 
 import seaborn as sns
 import matplotlib.pyplot as plt
-import time
-import matplotlib
-import nltk
-from nltk.sentiment import SentimentIntensityAnalyzer
-
 from matplotlib.font_manager import *
-from matplotlib import cm
-from datetime import datetime
-from scipy.stats import boxcox
+
 
 df2 = pd.read_csv(r"D:\data\聊天记录\2\utf8.csv", sep=',', usecols=[4,7,8])
 df2['Date'] = pd.to_datetime(df2['StrTime']).dt.date

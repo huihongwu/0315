@@ -1,17 +1,11 @@
 import numpy as np 
 import pandas as pd 
-import seaborn as sns
 import matplotlib.pyplot as plt
-import matplotlib
-import chardet
 import jieba
 
 from PIL import Image
-from collections import Counter
 from wordcloud import WordCloud, STOPWORDS,ImageColorGenerator 
 import matplotlib.pyplot as plt
-from matplotlib.font_manager import FontProperties
-from matplotlib import cm
 
 df = pd.read_csv(r"D:\data\聊天记录\2\utf8.csv", sep=',')
 
