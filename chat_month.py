@@ -50,7 +50,7 @@ plt.gca().spines['right'].set_visible(False)
 plt.gca().spines['bottom'].set_visible(True)
 fig.savefig('figures/loveWord_distribution.png', dpi=100)  # Save the bar plot with corrected file extension
 plt.show()
-"""
+
 #####################################################################################################################################################
 
 plt.figure(facecolor='white')
@@ -245,4 +245,3 @@ plt.gca().spines['bottom'].set_visible(True)
 fig.set_size_inches(10,6)
 fig.savefig('figures/chat_plot2.png',dpi=100)
 plt.show()
-"""

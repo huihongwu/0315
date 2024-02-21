@@ -36,7 +36,7 @@ bao_words = jieba.cut(bao_text)
 # Count word occurrences
 bao_word_count = Counter([word for word in bao_words if word not in stopwords_list])
 
-# Select the top 20 words
+# Select the top 30 words
 bao_top_words = bao_word_count.most_common(30)
 
 # Remove '\n' and ' ' from the top words
