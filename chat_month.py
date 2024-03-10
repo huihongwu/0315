@@ -11,7 +11,6 @@ df2 = df2[pd.to_datetime(df2['StrTime']) >= '2023-03-15']
 month_counts = df2['month'].value_counts().sort_index()
 scaled_sizes = month_counts * 0.15
  
-
 # Assuming ['StrContent'] contains the message content
 keywords = ['loveyou','i love you','love u','loveu', '拥抱','抱抱','like you','亲亲','爱', '我喜欢', '喜欢你']
 
@@ -35,11 +34,13 @@ for i, count in enumerate(count_contains_keyword):
     print(f"{labels}: {count}")
 
 """
+
 for i, sender in enumerate(count_contains_keyword.index):
     for keyword in keywords:
         count = df2[(df2['IsSender'] == sender) & (df2['StrContent'].str.contains(keyword, case=False))]['ContainsKeyword'].sum()
         plt.text(i, count + 0.1, f"{count}", ha='center', fontsize=12)
         print(f"{sender}: {keyword} - {count}")
+
 """
 plt.xlabel('Sender', fontname='Georgia', fontsize=14)
 plt.ylabel('Number of Love Messages', fontname='Georgia', fontsize=14)
@@ -175,7 +176,7 @@ plt.ylabel('Number of messages', fontname='Georgia',fontsize=18)
 
 sns.set_style('white')
 
-sns.histplot(df2['hour'],bins=23,kde=True, color='#9EB8D9')
+sns.histplot(df2['hour'],bins=23,kde=True, color='#9EB8D9') # type: ignore
 
 plt.xticks(np.arange(0, 24, 1.0), fontname='Georgia',fontsize=15)
 plt.yticks(fontname='Georgia',fontsize=15)
