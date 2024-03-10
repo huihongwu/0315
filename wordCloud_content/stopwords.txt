@@ -16,6 +16,7 @@ b
 一声
 加
 啊
+o
 找到
 没到
 脸
@@ -366,6 +367,7 @@ across
 actually
 after
 afterwards
+捂脸
 again
 against
 ain't
