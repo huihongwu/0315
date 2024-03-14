@@ -8,4 +8,3 @@ This repository contains visualizations and analysis figures generated from chat
 - top_words.py: Python script for creating top word bar charts.
 - wordcloud.py: Python script for creating word clouds.
 - utf8.csv: UTF-8 encoded CSV files of all WeChat chat data (starting from the first message requested through a friend request).
-- 蒋宝宝.html: utf8.csv HTML file presented in a visual report.
